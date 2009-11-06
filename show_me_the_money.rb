@@ -55,13 +55,13 @@ class ShowMeTheMoney
   # slaze cijenu slovima iz broja
   def kune_in_words(kune, lipe)
     parts = []
-    parts << number_to_string(kune).join(SEPARATOR).strip
+    parts << number_to_string(kune.to_s).join(SEPARATOR).strip
     parts << RIJECI[:kuna][quantify_amount(kune)]
 
     # dodaj veznik
-	  parts << VEZNIK if kune.to_i>0
+	  parts << VEZNIK if kune > 0
 
-    parts << number_to_string(lipe).join(SEPARATOR).strip
+    parts << number_to_string(lipe.to_s).join(SEPARATOR).strip
     parts << RIJECI[:lipa][quantify_amount(lipe)]
 
     # u nekim okolnostima moze doci do dvostrukog separatora pa da to maknem
@@ -69,7 +69,7 @@ class ShowMeTheMoney
   end
 
   def quantify_amount(amount)
-    (2..4).include?(amount.to_i % 10) && !(12..14).include?(amount.to_i % 100) ? :few : :many
+    (2..4).include?(amount % 10) && !(12..14).include?(amount % 100) ? :few : :many
   end
 
   # slaze od broja njegov tekstualni oblik
